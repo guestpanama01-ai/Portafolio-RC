@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael C. | Portafolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- PRELOADER Y PROGRESO -->
+    <div id="preloader" class="preloader"><div class="spinner"></div></div>
+    <div id="scrollProgress" class="scroll-progress"></div>
+
+    <!-- NAVBAR -->
+    <header class="main-header">
+        <nav class="nav-pill glass">
+            <a href="#hero" class="nav-logo">Rafael C.</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero" class="nav-link active">Inicio</a>
+                <a href="#about" class="nav-link">Sobre mí</a>
+                <a href="#education" class="nav-link">Formación</a>
+                <a href="#skills" class="nav-link">Habilidades</a>
+                <a href="#projects" class="nav-link">Proyectos</a>
+                <a href="#interests" class="nav-link">Intereses</a>
+                <a href="#contact" class="nav-link">Contacto</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">◐</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <div class="badge stagger-item">Aprendiendo, creando y explorando</div>
+            <h1 class="hero-title stagger-item">Hola, soy<br><span class="text-accent">Rafael C.</span></h1>
+            <p class="hero-subtitle stagger-item">Estudiante de tecnología y desarrollador en formación</p>
+            <p class="hero-desc stagger-item">Soy estudiante de Bachillerato en Ciencias en David, Chiriquí, Panamá. Me interesa la tecnología, la programación y el funcionamiento de los sistemas informáticos. Me gusta aprender mediante proyectos prácticos.</p>
+            <div class="hero-actions stagger-item">
+                <a href="#projects" class="btn-primary">Ver mis proyectos</a>
+                <a href="#about" class="btn-secondary">Conocer más sobre mí</a>
+            </div>
+        </div>
+        
+        <div class="hero-card-wrapper stagger-item">
+            <div class="id-card glass" id="floatingCard">
+                <div class="card-image">
+                    <img src="https://via.placeholder.com/200x250/1a1a2e/b4ff00?text=Rafael+C." alt="Rafael C.">
+                </div>
+                <h3 class="card-name">Rafael C.</h3>
+                <span class="card-role">ESTUDIANTE & DEV</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section id="about" class="section-padding">
+        <h2 class="section-title text-center reveal">Sobre mí</h2>
+        <div class="about-grid">
+            <div class="about-text glass reveal">
+                <h3>Mi historia con la <span class="text-accent">tecnología</span></h3>
+                <p>Soy un estudiante de Bachillerato en Ciencias del Colegio Pablo Emilio Corsen y también formo parte de la Institución ¡Supérate! David. Tengo interés por la tecnología, la informática y el desarrollo de soluciones digitales.</p>
+                <p>Me gusta aprender por mi cuenta, experimentar con herramientas nuevas y poner en práctica mis conocimientos mediante proyectos. Actualmente estoy fortaleciendo mis conocimientos en JavaScript, Python, HTML, redes informáticas y Linux.</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card glass stagger-item">
+                    <h3 class="stat-number" data-target="1">0</h3>
+                    <p>Proyecto Real</p>
+                </div>
+                <div class="metric-card glass stagger-item">
+                    <h3 class="stat-number" data-target="5">0</h3>
+                    <p>Tecnologías</p>
+                </div>
+                <div class="metric-card glass stagger-item">
+                    <h3 class="stat-number" data-target="2">0</h3>
+                    <p>Instituciones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMACIÓN -->
+    <section id="education" class="section-padding">
+        <h2 class="section-title text-center reveal">Formación Académica</h2>
+        <div class="timeline">
+            <div class="timeline-item glass stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Actualidad</div>
+                <h3>Bachillerato en Ciencias</h3>
+                <p class="text-accent">Colegio Pablo Emilio Corsen</p>
+                <p>Ubicación: David, Chiriquí, Panamá. Formación enfocada en ciencias y bases académicas sólidas.</p>
+            </div>
+            <div class="timeline-item glass stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Actualidad</div>
+                <h3>Participante del Programa</h3>
+                <p class="text-accent">Institución ¡Supérate! David</p>
+                <p>Participación en el programa ¡Supérate!, enfocado en el desarrollo de habilidades técnicas y tecnológicas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="projects" class="section-padding">
+        <h2 class="section-title text-center reveal">Mis Proyectos</h2>
+        <div class="portfolio-grid" id="projectGrid">
+            <article class="project-card glass stagger-item">
+                <div class="project-img">
+                    <img src="https://via.placeholder.com/300x200/1a1a2e/b4ff00?text=KAVARI+Travel" alt="KAVARI Travel">
+                </div>
+                <div class="project-info">
+                    <h3>KAVARI Travel</h3>
+                    <p>Plataforma web de turismo que reúne información útil para explorar destinos, cultura, gastronomía y opciones de viaje.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JS</span>
+                        <span class="tech-tag">Supabase</span>
+                    </div>
+                    <button class="btn-text open-modal" data-title="KAVARI Travel" data-desc="Plataforma web de turismo que reúne información útil para personas interesadas en conocer diferentes destinos. Facilita la exploración de lugares, cultura, gastronomía, alojamientos y opciones de viaje desde un mismo sitio. Incluye mapas interactivos y asistente informativo." data-link="https://kavari-website.github.io/Kavariwebsite/">Ver Detalles →</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeModal">✕</button>
+            <h2 id="modalTitle">Título</h2>
+            <p id="modalDesc">Descripción</p>
+            <div class="modal-actions">
+                <a href="#" id="modalLink" target="_blank" class="btn-primary">Visitar Sitio</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HABILIDADES -->
+    <section id="skills" class="section-padding">
+        <h2 class="section-title text-center reveal">Habilidades Técnicas</h2>
+        <div class="marquee-container reveal">
+            <div class="marquee-content">
+                <span>JavaScript</span><span>Python</span><span>HTML</span><span>Redes</span><span>Linux</span>
+            </div>
+            <div class="marquee-content">
+                <span>JavaScript</span><span>Python</span><span>HTML</span><span>Redes</span><span>Linux</span>
+            </div>
+        </div>
+
+        <div class="skills-grid reveal" style="margin-top: 2rem;">
+            <div class="metric-card glass stagger-item">
+                <h4 class="text-accent">Programación</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-main);">JavaScript y Python (Lógica y desarrollo en aprendizaje continuo).</p>
+            </div>
+            <div class="metric-card glass stagger-item">
+                <h4 class="text-accent">Desarrollo Web</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-main);">HTML (Estructuración de páginas web).</p>
+            </div>
+            <div class="metric-card glass stagger-item">
+                <h4 class="text-accent">Redes y Sistemas</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-main);">Fundamentos de redes informáticas y uso de entorno Linux.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERESES -->
+    <section id="interests" class="section-padding">
+        <h2 class="section-title text-center reveal">Intereses y Objetivos</h2>
+        <div class="interests-grid">
+            <div class="metric-card glass stagger-item" style="padding: 2rem;">
+                <h3 class="text-accent" style="margin-bottom: 1rem;">Intereses Tecnológicos</h3>
+                <ul style="color: var(--text-muted); list-style-position: inside; line-height: 2; font-size: 1rem;">
+                    <li>Desarrollo de software y páginas web.</li>
+                    <li>Programación con JavaScript y Python.</li>
+                    <li>Sistemas operativos Linux.</li>
+                    <li>Redes informáticas y funcionamiento de Internet.</li>
+                    <li>Ciberseguridad y protección de sistemas.</li>
+                </ul>
+            </div>
+            <div class="metric-card glass stagger-item" style="padding: 2rem;">
+                <h3 class="text-accent" style="margin-bottom: 1rem;">Objetivos Profesionales</h3>
+                <p style="color: var(--text-muted); font-size: 1rem;">Quiero continuar mi formación en tecnología, fortalecer mis conocimientos de programación y comprender mejor cómo funcionan los sistemas y las redes. Me interesa explorar áreas como el desarrollo de software y la ciberseguridad.</p>
+                <p style="color: var(--text-muted); margin-top: 1rem; font-size: 1rem;">A largo plazo, quiero convertir lo que aprendo en proyectos útiles y seguir creciendo académica y profesionalmente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO (Solo redes) -->
+    <section id="contact" class="section-padding">
+        <h2 class="section-title text-center reveal">Contacto</h2>
+        <div class="contact-container glass reveal">
+            <div class="contact-info">
+                <h3>Conecta conmigo</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem;">Siempre estoy abierto a aprender, colaborar en nuevos proyectos o simplemente hablar de tecnología.</p>
+                
+                <div class="contact-links">
+                    <button class="contact-btn" id="copyEmail" data-email="guestpanama01@gmail.com">
+                        <span class="symbol">[@]</span> guestpanama01@gmail.com
+                    </button>
+                    
+                    <a href="https://www.instagram.com/rafaelcamch" target="_blank" class="contact-btn">
+                        <span class="symbol">[IG]</span> @rafaelcamch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <p>© 2026 Rafael C. | David, Chiriquí, Panamá.</p>
+        <div class="footer-links">
+            <a href="https://www.instagram.com/rafaelcamch" target="_blank" class="text-accent">Instagram</a>
+            <a href="mailto:guestpanama01@gmail.com" class="text-accent">Correo</a>
+        </div>
+        <button id="backToTop" class="btn-text">Volver arriba ↑</button>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -4,30 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rafael C. | Portafolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Portafolio de Rafael C., estudiante de tecnología y desarrollador en formación en David, Chiriquí, Panamá.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <!-- PRELOADER Y PROGRESO -->
-    <div id="preloader" class="preloader"><div class="spinner"></div></div>
-    <div id="scrollProgress" class="scroll-progress"></div>
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-logo">RC</div>
+        <div class="preloader-bar"></div>
+    </div>
+    <div id="scrollProgress" class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- FONDO ANIMADO -->
+    <div class="bg-fx" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="grid-lines"></span>
+    </div>
 
     <!-- NAVBAR -->
     <header class="main-header">
-        <nav class="nav-pill glass">
+        <nav class="nav-pill">
             <a href="#hero" class="nav-logo">Rafael C.</a>
             <div class="nav-links" id="navLinks">
                 <a href="#hero" class="nav-link active">Inicio</a>
                 <a href="#about" class="nav-link">Sobre mí</a>
-                <a href="#education" class="nav-link">Formación</a>
                 <a href="#skills" class="nav-link">Habilidades</a>
+                <a href="#experience" class="nav-link">Experiencia</a>
                 <a href="#projects" class="nav-link">Proyectos</a>
-                <a href="#interests" class="nav-link">Intereses</a>
+                <a href="#education" class="nav-link">Formación</a>
+                <a href="#goals" class="nav-link">Objetivos</a>
                 <a href="#contact" class="nav-link">Contacto</a>
             </div>
             <div class="nav-actions">
                 <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">◐</button>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú">☰</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
             </div>
         </nav>
     </header>
@@ -36,174 +50,416 @@
     <section id="hero" class="hero-section">
         <div class="hero-content">
             <div class="badge stagger-item">Aprendiendo, creando y explorando</div>
-            <h1 class="hero-title stagger-item">Hola, soy<br><span class="text-accent">Rafael C.</span></h1>
-            <p class="hero-subtitle stagger-item">Estudiante de tecnología y desarrollador en formación</p>
+            <h1 class="hero-title stagger-item">Hola, soy<br><span class="gradient-text">Rafael C.</span></h1>
+            <p class="hero-subtitle stagger-item"><span id="typed">Estudiante de tecnología y desarrollador en formación</span><span class="caret" aria-hidden="true"></span></p>
             <p class="hero-desc stagger-item">Soy estudiante de Bachillerato en Ciencias en David, Chiriquí, Panamá. Me interesa la tecnología, la programación y el funcionamiento de los sistemas informáticos. Me gusta aprender mediante proyectos prácticos.</p>
             <div class="hero-actions stagger-item">
                 <a href="#projects" class="btn-primary">Ver mis proyectos</a>
                 <a href="#about" class="btn-secondary">Conocer más sobre mí</a>
             </div>
         </div>
-        
-        <div class="hero-card-wrapper stagger-item">
-            <div class="id-card glass" id="floatingCard">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x250/1a1a2e/b4ff00?text=Rafael+C." alt="Rafael C.">
+
+        <div class="hero-visual stagger-item">
+            <div class="float-wrap">
+                <div class="terminal" id="terminal">
+                    <div class="terminal-bar">
+                        <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                        <span class="terminal-title">rafael@david: ~</span>
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <div class="t-line" data-type="cmd"><span class="t-text">whoami</span></div>
+                        <div class="t-line" data-type="out">Rafael C. · estudiante &amp; dev</div>
+                        <div class="t-line" data-type="cmd"><span class="t-text">cat stack.txt</span></div>
+                        <div class="t-line" data-type="out"><span class="hl">JavaScript</span> · <span class="hl">Python</span> · <span class="hl">HTML</span> · <span class="hl">CSS</span></div>
+                        <div class="t-line" data-type="out"><span class="hl">Supabase</span> · <span class="hl">Linux</span> · <span class="hl">Redes</span></div>
+                        <div class="t-line" data-type="cmd"><span class="t-text">ls proyectos/</span></div>
+                        <div class="t-line" data-type="out"><span class="hl">kavari-travel/</span></div>
+                        <div class="t-line" data-type="prompt"></div>
+                    </div>
                 </div>
-                <h3 class="card-name">Rafael C.</h3>
-                <span class="card-role">ESTUDIANTE & DEV</span>
+                <span class="float-chip chip-1">JavaScript</span>
+                <span class="float-chip chip-2">Linux</span>
+                <span class="float-chip chip-3">Python</span>
             </div>
         </div>
+
+        <a href="#about" class="scroll-cue" aria-label="Bajar a Sobre mí"></a>
     </section>
 
-    <!-- SOBRE MÍ -->
+    <!-- 01 SOBRE MÍ -->
     <section id="about" class="section-padding">
-        <h2 class="section-title text-center reveal">Sobre mí</h2>
+        <div class="section-head reveal">
+            <span class="eyebrow">// 01 · Perfil</span>
+            <h2 class="section-title">Sobre mí</h2>
+        </div>
         <div class="about-grid">
-            <div class="about-text glass reveal">
+            <div class="about-text glass spot reveal-left">
                 <h3>Mi historia con la <span class="text-accent">tecnología</span></h3>
-                <p>Soy un estudiante de Bachillerato en Ciencias del Colegio Pablo Emilio Corsen y también formo parte de la Institución ¡Supérate! David. Tengo interés por la tecnología, la informática y el desarrollo de soluciones digitales.</p>
-                <p>Me gusta aprender por mi cuenta, experimentar con herramientas nuevas y poner en práctica mis conocimientos mediante proyectos. Actualmente estoy fortaleciendo mis conocimientos en JavaScript, Python, HTML, redes informáticas y Linux.</p>
+                <p>Soy un estudiante apasionado por la tecnología y el aprendizaje constante. Me interesa comprender cómo funcionan los sistemas, desarrollar herramientas digitales y encontrar soluciones a problemas mediante la tecnología.</p>
+                <p>Tengo conocimientos en programación, desarrollo web, diseño digital, hardware, software y fundamentos de redes y ciberseguridad.</p>
+                <p>Me gusta experimentar con nuevas tecnologías, mejorar proyectos existentes y convertir ideas en soluciones funcionales. También tengo interés en la inteligencia artificial y sus posibilidades para desarrollar aplicaciones y experiencias digitales.</p>
             </div>
-            <div class="metrics-grid">
-                <div class="metric-card glass stagger-item">
-                    <h3 class="stat-number" data-target="1">0</h3>
-                    <p>Proyecto Real</p>
+
+            <div class="about-side">
+                <div class="ficha glass spot stagger-item">
+                    <h3 class="text-accent">Ficha personal</h3>
+                    <dl class="ficha-list">
+                        <div class="ficha-row"><dt><span class="symbol">[loc]</span> Ubicación</dt><dd>David, Chiriquí, Panamá</dd></div>
+                        <div class="ficha-row"><dt><span class="symbol">[edu]</span> Formación</dt><dd>Bachillerato en Ciencias</dd></div>
+                        <div class="ficha-row"><dt><span class="symbol">[uni]</span> Institución</dt><dd>Colegio Pablo Emilio Corsen</dd></div>
+                        <div class="ficha-row"><dt><span class="symbol">[int]</span> Área de interés</dt><dd>Tecnología y ciberseguridad</dd></div>
+                        <div class="ficha-row"><dt><span class="symbol">[lng]</span> Idiomas</dt><dd>Español e inglés</dd></div>
+                        <div class="ficha-row"><dt><span class="symbol">[dev]</span> Enfoque</dt><dd>Desarrollo y aprendizaje tecnológico</dd></div>
+                    </dl>
                 </div>
-                <div class="metric-card glass stagger-item">
-                    <h3 class="stat-number" data-target="5">0</h3>
-                    <p>Tecnologías</p>
-                </div>
-                <div class="metric-card glass stagger-item">
-                    <h3 class="stat-number" data-target="2">0</h3>
-                    <p>Instituciones</p>
+                <div class="metrics-grid">
+                    <div class="metric-card glass spot stagger-item">
+                        <h3 class="stat-number" data-target="1">1</h3>
+                        <p>Proyecto Real</p>
+                    </div>
+                    <div class="metric-card glass spot stagger-item">
+                        <h3 class="stat-number" data-target="8">8</h3>
+                        <p>Áreas de trabajo</p>
+                    </div>
+                    <div class="metric-card glass spot stagger-item">
+                        <h3 class="stat-number" data-target="2">2</h3>
+                        <p>Idiomas</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FORMACIÓN -->
-    <section id="education" class="section-padding">
-        <h2 class="section-title text-center reveal">Formación Académica</h2>
-        <div class="timeline">
-            <div class="timeline-item glass stagger-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">Actualidad</div>
-                <h3>Bachillerato en Ciencias</h3>
-                <p class="text-accent">Colegio Pablo Emilio Corsen</p>
-                <p>Ubicación: David, Chiriquí, Panamá. Formación enfocada en ciencias y bases académicas sólidas.</p>
+    <!-- 02 HABILIDADES -->
+    <section id="skills" class="section-padding">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 02 · Habilidades</span>
+            <h2 class="section-title">Áreas en las que trabajo y sigo aprendiendo.</h2>
+        </div>
+
+        <div class="marquee-container reveal">
+            <div class="marquee-content">
+                <span>JavaScript</span><span>Python</span><span>HTML</span><span>CSS</span><span>Supabase</span><span>SQL</span><span>Linux</span><span>Redes</span><span>Photoshop</span>
             </div>
-            <div class="timeline-item glass stagger-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">Actualidad</div>
-                <h3>Participante del Programa</h3>
-                <p class="text-accent">Institución ¡Supérate! David</p>
-                <p>Participación en el programa ¡Supérate!, enfocado en el desarrollo de habilidades técnicas y tecnológicas.</p>
+            <div class="marquee-content" aria-hidden="true">
+                <span>JavaScript</span><span>Python</span><span>HTML</span><span>CSS</span><span>Supabase</span><span>SQL</span><span>Linux</span><span>Redes</span><span>Photoshop</span>
+            </div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">01</span>
+                <span class="skill-icon">&lt;/&gt;</span>
+                <h4 class="text-accent">Desarrollo web</h4>
+                <p>Creación, mantenimiento y mejora de sitios web mediante HTML, CSS y JavaScript. Diseño de interfaces y desarrollo de experiencias digitales.</p>
+                <div class="tech-tags"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">02</span>
+                <span class="skill-icon">{ }</span>
+                <h4 class="text-accent">Programación</h4>
+                <p>Desarrollo de soluciones mediante lenguajes de programación, automatización de tareas y experimentación con diferentes herramientas.</p>
+                <div class="tech-tags"><span class="tech-tag">Python</span><span class="tech-tag">JavaScript</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">03</span>
+                <span class="skill-icon">[db]</span>
+                <h4 class="text-accent">Bases de datos</h4>
+                <p>Gestión, organización y mantenimiento de bases de datos. Integración de información en proyectos web y mejora de estructuras existentes.</p>
+                <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">SQL</span><span class="tech-tag">JSON</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">04</span>
+                <span class="skill-icon">[AI]</span>
+                <h4 class="text-accent">Inteligencia artificial</h4>
+                <p>Utilización de herramientas de IA para generar contenido, imágenes, recursos visuales y apoyar el desarrollo de proyectos tecnológicos.</p>
+                <div class="tech-tags"><span class="tech-tag">IA generativa</span><span class="tech-tag">Prompt Engineering</span><span class="tech-tag">Automatización</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">05</span>
+                <span class="skill-icon">[hw]</span>
+                <h4 class="text-accent">Hardware y mantenimiento</h4>
+                <p>Conocimientos sobre componentes de computadoras, configuración de equipos, diagnóstico de problemas y mantenimiento de hardware.</p>
+                <div class="tech-tags"><span class="tech-tag">Componentes</span><span class="tech-tag">Ensamblaje</span><span class="tech-tag">Diagnóstico</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">06</span>
+                <span class="skill-icon">$_</span>
+                <h4 class="text-accent">Software y sistemas</h4>
+                <p>Instalación, configuración, administración y resolución de problemas relacionados con sistemas operativos y aplicaciones.</p>
+                <div class="tech-tags"><span class="tech-tag">Linux</span><span class="tech-tag">Windows</span><span class="tech-tag">Software</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">07</span>
+                <span class="skill-icon">[#]</span>
+                <h4 class="text-accent">Redes y ciberseguridad</h4>
+                <p>Fundamentos de redes informáticas, conectividad, comandos de diagnóstico y conceptos de seguridad digital.</p>
+                <div class="tech-tags"><span class="tech-tag">Redes</span><span class="tech-tag">CMD</span><span class="tech-tag">Seguridad informática</span></div>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">08</span>
+                <span class="skill-icon">[ui]</span>
+                <h4 class="text-accent">Diseño digital</h4>
+                <p>Diseño de interfaces, recursos gráficos y contenido visual para proyectos digitales.</p>
+                <div class="tech-tags"><span class="tech-tag">Canva</span><span class="tech-tag">Photoshop</span><span class="tech-tag">Diseño UI</span></div>
             </div>
         </div>
     </section>
 
-    <!-- PROYECTOS -->
+    <!-- 03 EXPERIENCIA TÉCNICA -->
+    <section id="experience" class="section-padding">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 03 · Experiencia técnica</span>
+            <h2 class="section-title">Aprender, experimentar y mejorar.</h2>
+            <p class="section-sub">Mi experiencia tecnológica se desarrolla principalmente mediante proyectos personales, actividades académicas y aprendizaje independiente.</p>
+        </div>
+        <div class="exp-list">
+            <div class="exp-item glass spot stagger-item">
+                <span class="exp-idx">[web]</span>
+                <div>
+                    <h3>Desarrollo y mantenimiento web</h3>
+                    <p>Creación de páginas, corrección de errores, optimización y mejora de proyectos existentes.</p>
+                </div>
+            </div>
+            <div class="exp-item glass spot stagger-item">
+                <span class="exp-idx">[data]</span>
+                <div>
+                    <h3>Gestión de información</h3>
+                    <p>Mantenimiento de bases de datos, organización de información e integración con aplicaciones.</p>
+                </div>
+            </div>
+            <div class="exp-item glass spot stagger-item">
+                <span class="exp-idx">[hw]</span>
+                <div>
+                    <h3>Experimentación con hardware</h3>
+                    <p>Exploración de componentes, configuración y mantenimiento de equipos.</p>
+                </div>
+            </div>
+            <div class="exp-item glass spot stagger-item">
+                <span class="exp-idx">[sys]</span>
+                <div>
+                    <h3>Software y sistemas</h3>
+                    <p>Instalación, configuración y resolución de inconvenientes técnicos.</p>
+                </div>
+            </div>
+            <div class="exp-item glass spot stagger-item">
+                <span class="exp-idx">[AI]</span>
+                <div>
+                    <h3>Inteligencia artificial</h3>
+                    <p>Creación de recursos mediante IA e incorporación de herramientas inteligentes en diferentes proyectos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 PROYECTOS -->
     <section id="projects" class="section-padding">
-        <h2 class="section-title text-center reveal">Mis Proyectos</h2>
+        <div class="section-head reveal">
+            <span class="eyebrow">// 04 · Proyectos</span>
+            <h2 class="section-title">Ideas convertidas en proyectos funcionales.</h2>
+            <p class="section-sub">Aquí se presentan algunos de mis trabajos y áreas de experimentación.</p>
+        </div>
         <div class="portfolio-grid" id="projectGrid">
-            <article class="project-card glass stagger-item">
-                <div class="project-img">
-                    <img src="https://via.placeholder.com/300x200/1a1a2e/b4ff00?text=KAVARI+Travel" alt="KAVARI Travel">
+            <article class="project-card featured glass spot stagger-item">
+                <div class="project-cover" aria-hidden="true">
+                    <span class="cover-ring ring-1"></span>
+                    <span class="cover-ring ring-2"></span>
+                    <div class="cover-mark"><strong>KAVARI</strong><span>Travel</span></div>
                 </div>
                 <div class="project-info">
+                    <span class="project-label">[ proyecto destacado ]</span>
                     <h3>KAVARI Travel</h3>
-                    <p>Plataforma web de turismo que reúne información útil para explorar destinos, cultura, gastronomía y opciones de viaje.</p>
+                    <p>Proyecto de plataforma turística que reúne información sobre destinos, cultura, hospedaje y experiencias de viaje en diferentes países.</p>
                     <div class="tech-tags">
                         <span class="tech-tag">HTML</span>
                         <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JS</span>
+                        <span class="tech-tag">JavaScript</span>
                         <span class="tech-tag">Supabase</span>
                     </div>
                     <button class="btn-text open-modal" data-title="KAVARI Travel" data-desc="Plataforma web de turismo que reúne información útil para personas interesadas en conocer diferentes destinos. Facilita la exploración de lugares, cultura, gastronomía, alojamientos y opciones de viaje desde un mismo sitio. Incluye mapas interactivos y asistente informativo." data-link="https://kavari-website.github.io/Kavariwebsite/">Ver Detalles →</button>
                 </div>
             </article>
+
+            <article class="project-card mini glass spot stagger-item">
+                <div class="project-cover cover-web" aria-hidden="true">
+                    <span class="cover-ring ring-1"></span>
+                    <span class="cover-ring ring-2"></span>
+                    <div class="cover-mark"><strong>&lt;/&gt;</strong><span>Web</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Desarrollo de sitios web</h3>
+                    <p>Creación y mejora de páginas web, trabajando en estructura, diseño, funcionalidades, rendimiento y experiencia de usuario.</p>
+                    <div class="tech-tags"><span class="tech-tag">Frontend</span><span class="tech-tag">UI/UX</span><span class="tech-tag">JavaScript</span></div>
+                </div>
+            </article>
+
+            <article class="project-card mini glass spot stagger-item">
+                <div class="project-cover cover-data" aria-hidden="true">
+                    <span class="cover-ring ring-1"></span>
+                    <span class="cover-ring ring-2"></span>
+                    <div class="cover-mark"><strong>[db]</strong><span>Datos</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Gestión de bases de datos</h3>
+                    <p>Práctica de organización, mantenimiento e integración de bases de datos para almacenar y administrar información de proyectos.</p>
+                    <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">SQL</span><span class="tech-tag">JSON</span></div>
+                </div>
+            </article>
+
+            <article class="project-card mini glass spot stagger-item">
+                <div class="project-cover cover-ai" aria-hidden="true">
+                    <span class="cover-ring ring-1"></span>
+                    <span class="cover-ring ring-2"></span>
+                    <div class="cover-mark"><strong>[AI]</strong><span>IA</span></div>
+                </div>
+                <div class="project-info">
+                    <h3>Experimentación con inteligencia artificial</h3>
+                    <p>Exploración de herramientas generativas para crear imágenes, recursos digitales y apoyar procesos creativos y de desarrollo.</p>
+                    <div class="tech-tags"><span class="tech-tag">IA</span><span class="tech-tag">Generación visual</span><span class="tech-tag">Prompts</span></div>
+                </div>
+            </article>
         </div>
     </section>
 
-    <!-- MODAL -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal-content glass">
-            <button class="modal-close" id="closeModal">✕</button>
-            <h2 id="modalTitle">Título</h2>
-            <p id="modalDesc">Descripción</p>
-            <div class="modal-actions">
-                <a href="#" id="modalLink" target="_blank" class="btn-primary">Visitar Sitio</a>
-            </div>
+    <!-- 05 FORMACIÓN -->
+    <section id="education" class="section-padding">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 05 · Formación</span>
+            <h2 class="section-title">Construyendo mis conocimientos.</h2>
         </div>
-    </div>
-
-    <!-- HABILIDADES -->
-    <section id="skills" class="section-padding">
-        <h2 class="section-title text-center reveal">Habilidades Técnicas</h2>
-        <div class="marquee-container reveal">
-            <div class="marquee-content">
-                <span>JavaScript</span><span>Python</span><span>HTML</span><span>Redes</span><span>Linux</span>
+        <div class="timeline draw-line">
+            <div class="timeline-item glass spot stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Formación académica · Actualidad</div>
+                <h3>Bachillerato en Ciencias</h3>
+                <p class="text-accent">Colegio Pablo Emilio Corsen</p>
+                <p>David, Chiriquí, Panamá. Formación enfocada en ciencias y bases académicas sólidas.</p>
             </div>
-            <div class="marquee-content">
-                <span>JavaScript</span><span>Python</span><span>HTML</span><span>Redes</span><span>Linux</span>
+            <div class="timeline-item glass spot stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Programa · Actualidad</div>
+                <h3>Participante del Programa</h3>
+                <p class="text-accent">Institución ¡Supérate! David</p>
+                <p>Participación en el programa ¡Supérate!, enfocado en el desarrollo de habilidades técnicas y tecnológicas.</p>
             </div>
-        </div>
-
-        <div class="skills-grid reveal" style="margin-top: 2rem;">
-            <div class="metric-card glass stagger-item">
-                <h4 class="text-accent">Programación</h4>
-                <p style="margin-top: 0.5rem; color: var(--text-main);">JavaScript y Python (Lógica y desarrollo en aprendizaje continuo).</p>
+            <div class="timeline-item glass spot stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Formación independiente</div>
+                <h3>Aprendizaje tecnológico</h3>
+                <p>Formación independiente en programación, desarrollo web, hardware, software, bases de datos y sistemas operativos.</p>
             </div>
-            <div class="metric-card glass stagger-item">
-                <h4 class="text-accent">Desarrollo Web</h4>
-                <p style="margin-top: 0.5rem; color: var(--text-main);">HTML (Estructuración de páginas web).</p>
-            </div>
-            <div class="metric-card glass stagger-item">
-                <h4 class="text-accent">Redes y Sistemas</h4>
-                <p style="margin-top: 0.5rem; color: var(--text-main);">Fundamentos de redes informáticas y uso de entorno Linux.</p>
+            <div class="timeline-item glass spot stagger-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Interés en profundizar</div>
+                <h3>Ciberseguridad</h3>
+                <p>Interés en profundizar en seguridad informática, redes, protección de sistemas y administración de infraestructura tecnológica.</p>
             </div>
         </div>
     </section>
 
-    <!-- INTERESES -->
-    <section id="interests" class="section-padding">
-        <h2 class="section-title text-center reveal">Intereses y Objetivos</h2>
-        <div class="interests-grid">
-            <div class="metric-card glass stagger-item" style="padding: 2rem;">
-                <h3 class="text-accent" style="margin-bottom: 1rem;">Intereses Tecnológicos</h3>
-                <ul style="color: var(--text-muted); list-style-position: inside; line-height: 2; font-size: 1rem;">
-                    <li>Desarrollo de software y páginas web.</li>
-                    <li>Programación con JavaScript y Python.</li>
-                    <li>Sistemas operativos Linux.</li>
-                    <li>Redes informáticas y funcionamiento de Internet.</li>
-                    <li>Ciberseguridad y protección de sistemas.</li>
-                </ul>
+    <!-- 06 CREATIVIDAD Y TECNOLOGÍA -->
+    <section id="creative" class="section-padding">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 06 · Creatividad y tecnología</span>
+            <h2 class="section-title">Más allá de la programación.</h2>
+            <p class="section-sub">La tecnología no se limita al código. También me interesa el diseño, la creación de contenido visual y la experimentación con nuevas herramientas.</p>
+        </div>
+        <div class="creative-list">
+            <div class="creative-item glass spot stagger-item">
+                <span class="exp-idx">[ui]</span>
+                <p>Diseño de interfaces y páginas web.</p>
             </div>
-            <div class="metric-card glass stagger-item" style="padding: 2rem;">
-                <h3 class="text-accent" style="margin-bottom: 1rem;">Objetivos Profesionales</h3>
-                <p style="color: var(--text-muted); font-size: 1rem;">Quiero continuar mi formación en tecnología, fortalecer mis conocimientos de programación y comprender mejor cómo funcionan los sistemas y las redes. Me interesa explorar áreas como el desarrollo de software y la ciberseguridad.</p>
-                <p style="color: var(--text-muted); margin-top: 1rem; font-size: 1rem;">A largo plazo, quiero convertir lo que aprendo en proyectos útiles y seguir creciendo académica y profesionalmente.</p>
+            <div class="creative-item glass spot stagger-item">
+                <span class="exp-idx">[gfx]</span>
+                <p>Creación de recursos gráficos.</p>
+            </div>
+            <div class="creative-item glass spot stagger-item">
+                <span class="exp-idx">[AI]</span>
+                <p>Generación de imágenes mediante inteligencia artificial.</p>
+            </div>
+            <div class="creative-item glass spot stagger-item">
+                <span class="exp-idx">[edit]</span>
+                <p>Exploración de herramientas de edición y diseño.</p>
+            </div>
+            <div class="creative-item glass spot stagger-item">
+                <span class="exp-idx">[viz]</span>
+                <p>Desarrollo de conceptos visuales para proyectos digitales.</p>
             </div>
         </div>
     </section>
 
-    <!-- CONTACTO (Solo redes) -->
+    <!-- 07 OBJETIVOS -->
+    <section id="goals" class="section-padding">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 07 · Objetivos</span>
+            <h2 class="section-title">Lo que quiero construir.</h2>
+        </div>
+        <div class="goals-grid">
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">01</span>
+                <span class="skill-icon">[sec]</span>
+                <h4 class="text-accent">Ciberseguridad</h4>
+                <p>Profundizar en seguridad informática, redes y protección de sistemas.</p>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">02</span>
+                <span class="skill-icon">{ }</span>
+                <h4 class="text-accent">Desarrollo de software</h4>
+                <p>Mejorar mis conocimientos de programación y crear aplicaciones funcionales.</p>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">03</span>
+                <span class="skill-icon">&lt;/&gt;</span>
+                <h4 class="text-accent">Desarrollo web</h4>
+                <p>Construir sitios web modernos, optimizados y con buenas experiencias de usuario.</p>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">04</span>
+                <span class="skill-icon">[AI]</span>
+                <h4 class="text-accent">Inteligencia artificial</h4>
+                <p>Explorar nuevas formas de integrar IA en proyectos y automatizar procesos.</p>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">05</span>
+                <span class="skill-icon">[hw]</span>
+                <h4 class="text-accent">Hardware y sistemas</h4>
+                <p>Ampliar mis conocimientos de arquitectura de computadoras, sistemas operativos y mantenimiento.</p>
+            </div>
+            <div class="skill-card glass spot stagger-item">
+                <span class="skill-num">06</span>
+                <span class="skill-icon">[+]</span>
+                <h4 class="text-accent">Emprendimiento tecnológico</h4>
+                <p>Desarrollar proyectos propios y ofrecer soluciones digitales en el futuro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 08 CONTACTO -->
     <section id="contact" class="section-padding">
-        <h2 class="section-title text-center reveal">Contacto</h2>
-        <div class="contact-container glass reveal">
+        <div class="section-head reveal">
+            <span class="eyebrow">// 08 · Contacto</span>
+            <h2 class="section-title">¿Tienes una idea o proyecto tecnológico?</h2>
+            <p class="section-sub">Estoy interesado en aprender, colaborar y participar en proyectos relacionados con tecnología, programación, diseño y desarrollo digital.</p>
+        </div>
+        <div class="contact-container glass spot reveal-scale">
             <div class="contact-info">
                 <h3>Conecta conmigo</h3>
-                <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem;">Siempre estoy abierto a aprender, colaborar en nuevos proyectos o simplemente hablar de tecnología.</p>
-                
                 <div class="contact-links">
-                    <button class="contact-btn" id="copyEmail" data-email="guestpanama01@gmail.com">
-                        <span class="symbol">[@]</span> guestpanama01@gmail.com
+                    <button class="contact-btn" data-app="mail" data-copy="guestpanama01@gmail.com" aria-label="Copiar correo electrónico">
+                        <span class="app-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7 12 13.5 20.5 7"/></svg></span><span class="contact-text"><small>Correo</small><b>guestpanama01@gmail.com</b></span>
                     </button>
-                    
-                    <a href="https://www.instagram.com/rafaelcamch" target="_blank" class="contact-btn">
-                        <span class="symbol">[IG]</span> @rafaelcamch
+
+                    <a href="https://github.com/guestpanama01-ai" target="_blank" rel="noopener" class="contact-btn" data-app="github" aria-label="GitHub: guestpanama01-ai">
+                        <span class="app-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span><span class="contact-text"><small>GitHub</small><b>guestpanama01-ai</b></span>
                     </a>
+
+                    <a href="https://www.instagram.com/rafaelcamch" target="_blank" rel="noopener" class="contact-btn" data-app="instagram" aria-label="Instagram: rafaelcamch">
+                        <span class="app-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></span><span class="contact-text"><small>Instagram</small><b>@rafaelcamch</b></span>
+                    </a>
+
+                    <button class="contact-btn" data-app="discord" data-copy="rafaelcmch" aria-label="Copiar usuario de Discord">
+                        <span class="app-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span><span class="contact-text"><small>Discord</small><b>rafaelcmch</b></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -213,11 +469,24 @@
     <footer class="main-footer">
         <p>© 2026 Rafael C. | David, Chiriquí, Panamá.</p>
         <div class="footer-links">
-            <a href="https://www.instagram.com/rafaelcamch" target="_blank" class="text-accent">Instagram</a>
+            <a href="https://github.com/guestpanama01-ai" target="_blank" rel="noopener" class="text-accent">GitHub</a>
+            <a href="https://www.instagram.com/rafaelcamch" target="_blank" rel="noopener" class="text-accent">Instagram</a>
             <a href="mailto:guestpanama01@gmail.com" class="text-accent">Correo</a>
         </div>
         <button id="backToTop" class="btn-text">Volver arriba ↑</button>
     </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeModal" aria-label="Cerrar">✕</button>
+            <h2 id="modalTitle">Título</h2>
+            <p id="modalDesc">Descripción</p>
+            <div class="modal-actions">
+                <a href="#" id="modalLink" target="_blank" rel="noopener" class="btn-primary">Visitar Sitio</a>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

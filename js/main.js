@@ -142,47 +142,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* 5. SCROLL REVEAL Y STAGGER */
+    /* 5. ENTRADAS DE CONTENIDO
+       Con movimiento completo NO hay animaciones "de una sola vez": cada tarjeta se coloca según su
+       posición en pantalla (sección 12), así que subir y bajar las construye y las deshace.
+       Con "reducir movimiento" se mantiene el observador clásico (aparecer una vez). */
+    const ENTRY_CLASSES = ['reveal', 'reveal-left', 'reveal-right', 'reveal-scale', 'stagger-item'];
     const revealItems = $$('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-item, .draw-line');
-    revealItems.forEach(el => {
-        if (el.classList.contains('stagger-item')) {
-            const siblings = [...el.parentElement.children].filter(c => c.classList.contains('stagger-item'));
-            el.dataset.i = siblings.indexOf(el);
-        }
-    });
+    const lateItems = revealItems.filter(el => !el.closest('.hero-section'));
 
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            revealObserver.unobserve(entry.target);
-            show(entry.target, (parseInt(entry.target.dataset.i, 10) || 0) * 100);
+    if (reduceMotion) {
+        lateItems.forEach(el => {
+            if (el.classList.contains('stagger-item')) {
+                const siblings = [...el.parentElement.children].filter(c => c.classList.contains('stagger-item'));
+                el.dataset.i = siblings.indexOf(el);
+            }
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealItems
-        .filter(el => !el.closest('.hero-section'))
-        .forEach(el => revealObserver.observe(el));
-
-    /* 6. CONTADORES DE MÉTRICAS */
-    const metricsGrid = $('.metrics-grid');
-    if (metricsGrid) {
-        const counterObserver = new IntersectionObserver(([entry]) => {
-            if (!entry.isIntersecting) return;
-            counterObserver.disconnect();
-            $$('.stat-number').forEach(stat => {
-                const target = parseInt(stat.dataset.target, 10);
-                if (reduceMotion) { stat.textContent = target; return; }
-                const duration = 1600;
-                const t0 = performance.now();
-                const step = (now) => {
-                    const p = Math.min((now - t0) / duration, 1);
-                    stat.textContent = Math.round(target * (1 - Math.pow(1 - p, 4)));
-                    if (p < 1) requestAnimationFrame(step);
-                };
-                requestAnimationFrame(step);
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                revealObserver.unobserve(entry.target);
+                show(entry.target, (parseInt(entry.target.dataset.i, 10) || 0) * 100);
             });
-        }, { threshold: 0.4 });
-        counterObserver.observe(metricsGrid);
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        lateItems.forEach(el => revealObserver.observe(el));
+    } else {
+        lateItems.forEach(el => el.classList.remove(...ENTRY_CLASSES));
+    }
+
+    /* 6. CONTADORES DE MÉTRICAS (con movimiento completo los mueve el scroll, ver sección 12) */
+    const metricsGrid = $('.metrics-grid');
+    if (metricsGrid && reduceMotion) {
+        $$('.stat-number').forEach(stat => { stat.textContent = stat.dataset.target; });
     }
 
     /* 7. NAVBAR (sección activa) Y MENÚ MÓVIL */
@@ -276,12 +266,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* =========================================
-       12. CINEMÁTICA: animaciones ligadas al scroll
+       12. HISTORIA GUIADA POR EL SCROLL
+       Un solo bucle por fotograma, en dos fases: primero se LEE toda la geometría
+       y después se ESCRIBEN los estilos (evita recálculos de layout intermedios).
+       Nada se dispara "una vez": cada valor es función de la posición del scroll.
        (se omite si el sistema pide menos movimiento)
        ========================================= */
     if (reduceMotion) return;
 
     const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const sm = t => { t = clamp(t); return t * t * (3 - 2 * t); };
 
     /* Capas de cine: barras (letterbox), viñeta y grano de película */
     document.body.insertAdjacentHTML('beforeend',
@@ -311,21 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('scrub');
         return { el, spans, lit: -1 };
     });
-
-    /* Profundidad: las tarjetas de cada columna se mueven a distinta velocidad */
-    const depthItems = [];
-    $$('.goals-grid, .portfolio-grid, .creative-list, .metrics-grid').forEach(grid => {
-        [...grid.children].forEach((el, i) => {
-            const k = ((i % 3) - 1) * 0.04;
-            if (k !== 0) depthItems.push({ el, k, y: 0 });
-        });
-    });
-
-    /* Deslizamiento lateral: experiencia y línea de tiempo entran desde los lados */
-    const slideItems = [
-        ...$$('.exp-item').map((el, i) => ({ el, dir: i % 2 ? 1 : -1, x: null })),
-        ...$$('.timeline-item').map(el => ({ el, dir: 1, x: null }))
-    ];
 
     const heroSection = $('.hero-section');
     const orb1 = $('.orb-1');
@@ -362,15 +341,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateHscroll() {
+    function updateHscroll(top) {
         if (!hs || !hs.on || hs.max <= 0) return;
-        const rect = hs.wrap.getBoundingClientRect();
-        const p = clamp(-rect.top / hs.max);
+        const p = clamp(-top / hs.max);
         hs.grid.style.transform = `translate3d(${(-p * hs.max).toFixed(1)}px, 0, 0)`;
         hs.bar.style.transform = `scaleX(${p.toFixed(3)})`;
         const idx = Math.min(hs.total, Math.floor(p * hs.total) + 1);
         hs.count.textContent = `${String(idx).padStart(2, '0')} / ${String(hs.total).padStart(2, '0')}`;
     }
+
+    /* ---------- Entradas guiadas por el scroll ----------
+       Cada tarjeta se coloca en función de dónde está en pantalla (e: 0 = oculta y desplazada, 1 = en su sitio).
+       Mientras e < 1 lleva la clase .sd-live (opacidad, escala y desenfoque salen de --e en el CSS);
+       al asentarse se retira la clase para que los efectos de hover sigan funcionando. */
+    const flow = [];
+    function addFlow(sel, kind, o = {}) {
+        $$(sel).forEach(el => {
+            const idx = [...el.parentElement.children].indexOf(el);
+            el.classList.add('sd-' + kind);
+            flow.push({
+                el, kind, skip: o.skip || null,
+                col: o.grid ? idx % 3 : 0,                          // columna: escalona la entrada dentro de una fila
+                dir: o.alt ? (idx % 2 ? 1 : -1) : (o.dir || 1),     // lado desde el que entra (kind 'side')
+                depth: 0, e: -1, live: false, tx: 0, ty: 0
+            });
+        });
+    }
+    const inHscroll = el => !!(hs && hs.on && el.closest('.hscroll'));
+    addFlow('.about-text', 'side', { dir: -1 });
+    addFlow('.ficha', 'side', { dir: 1 });
+    addFlow('.metric-card', 'zoom', { grid: true });
+    addFlow('.marquee-container', 'up');
+    addFlow('.skill-card', 'up', { grid: true, skip: inHscroll });
+    addFlow('.exp-item', 'side', { alt: true });
+    addFlow('.project-card', 'tilt', { grid: true });
+    addFlow('.timeline-item', 'side', { dir: 1 });
+    addFlow('.creative-item', 'zoom', { grid: true });
+    addFlow('.contact-container', 'zoom');
+    addFlow('.main-footer', 'up');
+
+    /* Profundidad: las tarjetas de cada columna se mueven a distinta velocidad */
+    flow.forEach(it => {
+        if (!it.el.parentElement.matches('.goals-grid, .portfolio-grid, .creative-list, .metrics-grid')) return;
+        const i = [...it.el.parentElement.children].indexOf(it.el);
+        it.depth = ((i % 3) - 1) * 0.04;
+    });
+
+    /* Línea de tiempo: la línea se dibuja con el scroll */
+    const timeline = $('.timeline');
+    if (timeline) { timeline.classList.add('sd-line'); timeline.style.setProperty('--line', 0); }
+    let lineP = -1;
+
+    /* Contadores de métricas: suben y bajan con el scroll */
+    const stats = $$('.stat-number').map(el => ({ el, target: parseInt(el.dataset.target, 10) || 0, v: -1 }));
+
+    /* Máscaras de portadas y ficha (se abren con el scroll) + paralaje interno de las portadas */
+    const masks = [
+        ...$$('.project-cover').map(el => [el, 'up']),
+        ...$$('.ficha').map(el => [el, 'left'])
+    ].map(([el, dir]) => {
+        el.classList.add('mr');
+        el.dataset.mask = dir;
+        el.style.setProperty('--mr', 0);
+        return { el, host: el.parentElement, on: true, p: -1 };
+    });
+    const covers = $$('.project-cover').map(el => ({ el, py: 9 }));
 
     /* HUD de cámara: escena actual, timecode según el scroll y color de fondo por escena */
     const hud = $('.cine-hud');
@@ -382,10 +417,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     let currentScene = '';
     const FPS = 24, TOTAL_SECONDS = 150;
+    const pad2 = n => String(n).padStart(2, '0');
 
-    function updateHud(sy, vh) {
+    function updateHud(sceneTops, sy, vh, max) {
         let cur = sceneSections[0];
-        for (const s of sceneSections) { if (s.el.getBoundingClientRect().top <= vh * 0.5) cur = s; }
+        sceneSections.forEach((s, i) => { if (sceneTops[i] <= vh * 0.5) cur = s; });
         if (cur.id !== currentScene) {
             currentScene = cur.id;
             hudScene.textContent = 'Esc. ' + cur.label;
@@ -394,10 +430,8 @@ document.addEventListener('DOMContentLoaded', () => {
             void hud.offsetWidth; // reinicia la animación del corte de escena
             hud.classList.add('cut');
         }
-        const max = document.documentElement.scrollHeight - vh;
         const f = Math.round((max > 0 ? sy / max : 0) * TOTAL_SECONDS * FPS);
-        const pad = n => String(n).padStart(2, '0');
-        hudTc.textContent = `${pad(Math.floor(f / FPS / 60))}:${pad(Math.floor(f / FPS) % 60)}:${pad(f % FPS)}`;
+        hudTc.textContent = `${pad2(Math.floor(f / FPS / 60))}:${pad2(Math.floor(f / FPS) % 60)}:${pad2(f % FPS)}`;
     }
 
     /* Botones con efecto imán: siguen suavemente al cursor */
@@ -421,6 +455,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const sy = window.scrollY;
         const wide = window.innerWidth > 900;
 
+        /* ---- 1) LECTURA: toda la geometría junta ---- */
+        const headR = heads.map(h => h.getBoundingClientRect());
+        const scrubR = scrubEls.map(s => s.el.getBoundingClientRect());
+        const flowR = flow.map(it => it.el.getBoundingClientRect());
+        const maskR = masks.map(m => m.host.getBoundingClientRect());
+        const coverR = covers.map(c => c.el.getBoundingClientRect());
+        const sceneTops = sceneSections.map(s => s.el.getBoundingClientRect().top);
+        const hsTop = hs && hs.on ? hs.wrap.getBoundingClientRect().top : 0;
+        const metricsTop = metricsGrid ? metricsGrid.getBoundingClientRect().top : 0;
+        const tlR = timeline ? timeline.getBoundingClientRect() : null;
+        const maxScroll = document.documentElement.scrollHeight - vh;
+
+        /* ---- 2) ESCRITURA ---- */
+
         // Hero: se aleja y se desenfoca
         if (heroSection) heroSection.style.setProperty('--hp', clamp(sy / (vh * 0.9)).toFixed(3));
 
@@ -429,55 +477,85 @@ document.addEventListener('DOMContentLoaded', () => {
         if (orb2) orb2.style.translate = `${(Math.cos(sy / 1700) * -120).toFixed(1)}px ${(Math.sin(sy / 1400) * -140).toFixed(1)}px`;
 
         // Capítulos: entran con zoom y el número gigante se desplaza
-        heads.forEach(h => {
-            const r = h.getBoundingClientRect();
+        heads.forEach((h, i) => {
+            const r = headR[i];
             const e = clamp((vh * 0.95 - r.top) / (vh * 0.4));
             const sp = clamp((vh - r.top) / (vh + r.height));
             if (h._e === undefined || Math.abs(e - h._e) > 0.004) { h.style.setProperty('--e', e.toFixed(3)); h._e = e; }
             if (h._sp === undefined || Math.abs(sp - h._sp) > 0.004) { h.style.setProperty('--sp', sp.toFixed(3)); h._sp = sp; }
             const fl = clamp(1 - Math.abs(sp - 0.4) / 0.28); // flare: sube y baja al cruzar el título
             if (h._fl === undefined || Math.abs(fl - h._fl) > 0.01) { h.style.setProperty('--fl', fl.toFixed(2)); h._fl = fl; }
-            if (e > 0.55) h.classList.add('active');
+            h.classList.toggle('active', e > 0.55);
         });
 
         // Palabras que se encienden
-        scrubEls.forEach(s => {
-            const r = s.el.getBoundingClientRect();
-            const p = clamp((vh * 0.9 - r.top) / (vh * 0.45));
+        scrubEls.forEach((s, i) => {
+            const p = clamp((vh * 0.9 - scrubR[i].top) / (vh * 0.45));
             const n = Math.round(p * s.spans.length);
             if (n !== s.lit) {
-                s.spans.forEach((w, i) => w.classList.toggle('on', i < n));
+                s.spans.forEach((w, k) => w.classList.toggle('on', k < n));
                 s.lit = n;
             }
         });
 
-        // Profundidad (se desactiva en pantallas pequeñas)
-        depthItems.forEach(d => {
-            if (!wide) {
-                if (d.y !== 0) { d.el.style.translate = ''; d.y = 0; }
-                return;
+        // Tarjetas: entrada + profundidad, todo en función de la posición
+        flow.forEach((it, i) => {
+            const r = flowR[i];
+            const off = it.skip ? it.skip(it.el) : false;
+            let e = 1;
+            if (!off) e = sm((vh - (r.top - it.ty)) / (vh * 0.38) - it.col * 0.14); // se mide sobre la posición sin desplazar
+            const live = e < 0.999;
+
+            let x = 0, y = 0;
+            if (live) {
+                const k = 1 - e;
+                if (it.kind === 'side') x = k * (wide ? 90 : 36) * it.dir;
+                else if (it.kind === 'zoom') y = k * 30;
+                else y = k * (it.kind === 'tilt' ? (wide ? 70 : 40) : (wide ? 56 : 36));
             }
-            const r = d.el.getBoundingClientRect();
-            if (r.bottom < -200 || r.top > vh + 200) return;
-            const base = r.top + r.height / 2 - d.y; // posición sin el desplazamiento ya aplicado
-            d.y = (base - vh / 2) * d.k;
-            d.el.style.translate = `0 ${d.y.toFixed(1)}px`;
+            if (it.depth && wide && !off) y += (r.top + r.height / 2 - it.ty - vh / 2) * it.depth;
+
+            if (live !== it.live) { it.el.classList.toggle('sd-live', live); it.live = live; it.e = -1; }
+            if (live && Math.abs(e - it.e) > 0.003) { it.el.style.setProperty('--e', e.toFixed(3)); it.e = e; }
+            if (Math.abs(x - it.tx) > 0.3 || Math.abs(y - it.ty) > 0.3 || (x === 0 && y === 0 && (it.tx || it.ty))) {
+                it.el.style.translate = (x || y) ? `${x.toFixed(1)}px ${y.toFixed(1)}px` : '';
+                it.tx = x; it.ty = y;
+            }
         });
 
-        // Deslizamiento lateral
-        const amp = wide ? 90 : 36;
-        slideItems.forEach(s => {
-            const r = s.el.getBoundingClientRect();
-            const e = clamp((vh * 1.02 - r.top) / (vh * 0.38));
-            const x = (1 - e) * amp * s.dir;
-            if (s.x === null || Math.abs(x - s.x) > 0.3) {
-                s.el.style.translate = `${x.toFixed(1)}px 0`;
-                s.x = x;
-            }
+        // Máscaras: portadas (de abajo hacia arriba) y ficha (de izquierda a derecha)
+        masks.forEach((m, i) => {
+            const p = sm((vh * 0.96 - maskR[i].top) / (vh * 0.46));
+            const done = p >= 0.999;
+            if (done === m.on) { m.el.classList.toggle('mr', !done); m.on = !done; m.p = -1; }
+            if (m.on && Math.abs(p - m.p) > 0.004) { m.el.style.setProperty('--mr', p.toFixed(3)); m.p = p; }
         });
 
-        updateHud(sy, vh);
-        updateHscroll();
+        // Paralaje dentro de las portadas
+        covers.forEach((c, i) => {
+            const r = coverR[i];
+            if (r.bottom < -vh || r.top > vh * 2) return;
+            const py = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+            if (Math.abs(py - c.py) > 0.004) { c.el.style.setProperty('--py', py.toFixed(3)); c.py = py; }
+        });
+
+        // Línea de tiempo
+        if (tlR) {
+            const lp = clamp((vh * 0.62 - tlR.top) / Math.max(1, tlR.height));
+            if (Math.abs(lp - lineP) > 0.003) { timeline.style.setProperty('--line', lp.toFixed(3)); lineP = lp; }
+        }
+
+        // Contadores
+        if (metricsGrid) {
+            const k = 1 - Math.pow(1 - sm((vh * 0.95 - metricsTop) / (vh * 0.45)), 3);
+            stats.forEach(st => {
+                const v = Math.round(st.target * k);
+                if (v !== st.v) { st.el.textContent = v; st.v = v; }
+            });
+        }
+
+        updateHud(sceneTops, sy, vh, maxScroll);
+        updateHscroll(hsTop);
     }
 
     function requestCine() {
